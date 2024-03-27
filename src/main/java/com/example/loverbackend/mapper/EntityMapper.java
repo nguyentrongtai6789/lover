@@ -24,5 +24,4 @@ public interface EntityMapper<DTO, Entity> {
     List<DTO> toDto(List<Entity> entityList);
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDTO(DTO dto, @MappingTarget Entity entity);
-
 }

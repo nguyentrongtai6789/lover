@@ -3,6 +3,7 @@ package com.example.loverbackend.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -29,7 +30,17 @@ public class Account extends BaseEntity {
     @Enumerated
     private StatusAccount statusAccount;
 
-    @ManyToOne
-    @JoinColumn(name="role_id")
-    private Role role;
+    @Column(nullable = false)
+    private String nickname;
+
+//    @ManyToOne
+//    @JoinColumn(name="role_id")
+//    private Role roles;
+@ManyToMany(fetch = FetchType.EAGER)
+@JoinTable(name = "accounts_roles",
+        joinColumns = {@JoinColumn(name = "account_id")},
+        inverseJoinColumns = {@JoinColumn(name = "role_id")})
+private Set<Role> roles;
+
+
 }

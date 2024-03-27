@@ -38,4 +38,7 @@ public abstract class BaseEntity implements Serializable {
     @Column(name="deleted_by")
     private Long idAccountDeleted;
 
+    @Column(name = "is_active", columnDefinition = "TINYINT(1) DEFAULT 1")
+    private int isActive = 1;
+
 }
