@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -59,18 +60,27 @@ public class SecurityConfig{
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
-        http.csrf().ignoringAntMatchers("/api/**");
-        http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
-        http.authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .antMatchers( "/api/login").permitAll()
-                .antMatchers( "/api/createNewAccount/**").permitAll()
-                .anyRequest().authenticated()
-                .and().csrf().disable();
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
-        http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.cors();
+        return http.csrf(AbstractHttpConfigurer::disable)
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(auth -> auth
+                                .antMatchers("/**").permitAll()
+                                .antMatchers( "/api/login").permitAll()
+                                .antMatchers( "/api/findAllAccounts").permitAll()
+                                .antMatchers( "/api/sendCodeToEmail/**").permitAll()
+                                .antMatchers( "/api/sendCodeToEmail2/**").permitAll()
+                                .antMatchers( "/api/createNewAccount/**").permitAll()
+//                        .requestMatchers(HttpMethod.GET).hasAnyRole("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+//                        .requestMatchers(HttpMethod.DELETE, "/categories",
+//                                "/typeOfQuestions",
+//                                "/questions",
+//                                "/answers",
+//                                "/quizzes",
+//                                "/hello").hasAnyAuthority("ROLE_ADMIN")
+//                        .requestMatchers(HttpMethod.PUT, "/users").hasAnyAuthority("ROLE_USER")
+                )
+                .exceptionHandling(customizer -> customizer.accessDeniedHandler(customAccessDeniedHandler()))
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .httpBasic(Customizer.withDefaults())
+                .build();
     }
 }
