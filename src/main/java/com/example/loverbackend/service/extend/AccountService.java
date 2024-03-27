@@ -1,10 +1,11 @@
-package com.example.loverbackend.service;
+package com.example.loverbackend.service.extend;
 
 import com.example.loverbackend.dto.AccountDTO;
 import com.example.loverbackend.mapper.AccountMapper;
 import com.example.loverbackend.model.Account;
 import com.example.loverbackend.repository.AccountRepository;
 import com.example.loverbackend.security.AccountPrinciple;
+import com.example.loverbackend.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UserDetails;

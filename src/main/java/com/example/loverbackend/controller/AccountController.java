@@ -2,13 +2,10 @@ package com.example.loverbackend.controller;
 
 import com.example.loverbackend.dto.AccountDTO;
 import com.example.loverbackend.model.Account;
-import com.example.loverbackend.model.Role;
-import com.example.loverbackend.model.RoleName;
-import com.example.loverbackend.model.StatusAccount;
 import com.example.loverbackend.security.jwt.JwtResponse;
 import com.example.loverbackend.security.jwt.JwtService;
-import com.example.loverbackend.service.AccountService;
-import com.example.loverbackend.service.RoleService;
+import com.example.loverbackend.service.extend.AccountService;
+import com.example.loverbackend.service.extend.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController

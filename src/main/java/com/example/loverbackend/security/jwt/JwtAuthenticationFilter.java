@@ -1,6 +1,6 @@
 package com.example.loverbackend.security.jwt;
 
-import com.example.loverbackend.service.AccountService;
+import com.example.loverbackend.service.extend.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

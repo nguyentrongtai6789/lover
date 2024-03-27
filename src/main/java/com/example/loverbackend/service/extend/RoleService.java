@@ -1,4 +1,4 @@
-package com.example.loverbackend.service;
+package com.example.loverbackend.service.extend;
 
 import com.example.loverbackend.model.Role;
 import com.example.loverbackend.model.RoleName;

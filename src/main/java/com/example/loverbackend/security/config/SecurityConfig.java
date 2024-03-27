@@ -3,7 +3,7 @@ package com.example.loverbackend.security.config;
 import com.example.loverbackend.security.CustomAccessDeniedHandler;
 import com.example.loverbackend.security.RestAuthenticationEntryPoint;
 import com.example.loverbackend.security.jwt.JwtAuthenticationFilter;
-import com.example.loverbackend.service.AccountService;
+import com.example.loverbackend.service.extend.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
