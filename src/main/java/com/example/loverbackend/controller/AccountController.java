@@ -28,8 +28,6 @@ public class AccountController {
     private AccountService accountService;
     @Autowired
     private JwtService jwtService;
-    @Autowired
-    private RoleService roleService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody Account account) {
