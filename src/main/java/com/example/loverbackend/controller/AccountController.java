@@ -22,7 +22,7 @@ import java.util.List;
 //@CrossOrigin("*")
 @RequestMapping("/api")
 public class AccountController {
-
+    @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
     private AccountService accountService;

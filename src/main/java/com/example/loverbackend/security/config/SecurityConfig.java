@@ -65,7 +65,7 @@ public class SecurityConfig{
                 .authorizeHttpRequests(auth -> auth
                                 .antMatchers("/**").permitAll()
                                 .antMatchers( "/api/login").permitAll()
-                                .antMatchers( "/api/findAllAccounts").permitAll()
+                                .antMatchers( "/api/findAll").permitAll()
                                 .antMatchers( "/api/sendCodeToEmail/**").permitAll()
                                 .antMatchers( "/api/sendCodeToEmail2/**").permitAll()
                                 .antMatchers( "/api/createNewAccount/**").permitAll()
