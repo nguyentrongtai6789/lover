@@ -3,11 +3,10 @@ package com.example.loverbackend.model;
 import lombok.Data;
 
 import javax.persistence.*;
-//đây là nhánh của Tài
 @Data
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,17 +2,20 @@ package com.example.loverbackend.controller;
 
 import com.example.loverbackend.dto.AccountDTO;
 import com.example.loverbackend.model.Account;
-import com.example.loverbackend.model.Role;
-import com.example.loverbackend.model.RoleName;
-import com.example.loverbackend.model.StatusAccount;
-import com.example.loverbackend.service.AccountService;
-import com.example.loverbackend.service.RoleService;
+import com.example.loverbackend.security.jwt.JwtResponse;
+import com.example.loverbackend.security.jwt.JwtService;
+import com.example.loverbackend.service.extend.AccountService;
+import com.example.loverbackend.service.extend.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -20,20 +23,22 @@ import java.util.List;
 @RequestMapping("/api")
 public class AccountController {
     @Autowired
+    AuthenticationManager authenticationManager;
+    @Autowired
     private AccountService accountService;
     @Autowired
-    private RoleService roleService;
+    private JwtService jwtService;
 
-    @PostMapping("/login")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody Account account) {
-        Account account1 = accountService.findByUsername(account.getUsername());
-        if (account1.equals(null)) {
-            return new ResponseEntity<>(false, HttpStatus.OK);
-        } else if (account1.getUsername().equals(account.getUsername()) && account1.getPassword().equals(account.getPassword())) {
-            return new ResponseEntity<>(true, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(false, HttpStatus.OK);
-        }
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(account.getUsername(), account.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtService.generateTokenLogin(authentication);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        AccountDTO accountDTO = accountService.findByUsername(account.getUsername());
+        return ResponseEntity.ok(new JwtResponse(jwt, accountDTO.getId(),
+                accountDTO.getUsername(), accountDTO.getUsername(), userDetails.getAuthorities()));
     }
 
     @PostMapping("/createNewAccount")
