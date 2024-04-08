@@ -76,7 +76,7 @@ public class AccountService extends BaseService<AccountRepository, AccountDTO, A
         Random randomCode = new Random();
         int randomNum = randomCode.nextInt(900000) + 100000;
         String to = email;
-        String subject = "ĐĂNG KÍ TÀI KHOẢN ỨNG DỤNG DUAL";
+        String subject = "ĐĂNG KÍ TÀI KHOẢN ỨNG DỤNG COUPLE FAKE";
         String text = String.valueOf(randomNum);
         randomCodeSendToEmail = text;
         String content = "Xin Chào ...!\n" +
