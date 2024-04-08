@@ -12,13 +12,19 @@ import java.util.stream.Collectors;
 
 public class AccountPrinciple implements UserDetails {
 
+    private static final long serialVersionUID = 1L;
+
     private Long id;
+
     private String username;
+
     private String password;
 
     private Collection<? extends GrantedAuthority> roles;
 
-    public AccountPrinciple(Long id, String username, String password, Collection<? extends GrantedAuthority> roles) {
+    public AccountPrinciple(Long id,
+                            String username, String password,
+                            Collection<? extends GrantedAuthority> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -27,7 +33,7 @@ public class AccountPrinciple implements UserDetails {
 
     public static AccountPrinciple build(Account account) {
         List<GrantedAuthority> authorities = account.getRoles().stream().map(role ->
-                new SimpleGrantedAuthority(role.getRoleName().name())
+                new SimpleGrantedAuthority(role.getName())
         ).collect(Collectors.toList());
 
         return new AccountPrinciple(
@@ -38,9 +44,13 @@ public class AccountPrinciple implements UserDetails {
         );
     }
 
+    public Long getId() {
+        return id;
+    }
+
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+    public String getUsername() {
+        return username;
     }
 
     @Override
@@ -49,9 +59,10 @@ public class AccountPrinciple implements UserDetails {
     }
 
     @Override
-    public String getUsername() {
-        return username;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
@@ -72,6 +83,7 @@ public class AccountPrinciple implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

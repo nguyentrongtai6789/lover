@@ -1,13 +1,12 @@
 package com.example.loverbackend.repository;
 
 import com.example.loverbackend.model.Role;
-import com.example.loverbackend.model.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
-    Optional<Role> findByRoleName(RoleName roleName);
+
+public interface RoleRepository extends BaseRepository<Role>, JpaRepository<Role, Long> {
+    Role findByName(String name);
 }
