@@ -38,5 +38,4 @@ public class Account extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles;
 
-
 }
